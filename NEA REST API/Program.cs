@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NEA_Rest_API.Models;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

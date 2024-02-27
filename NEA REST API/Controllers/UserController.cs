@@ -13,7 +13,7 @@ namespace NEA_Rest_API.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet ("{id}")]
         public async Task<IActionResult> GetUsers(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -28,21 +28,21 @@ namespace NEA_Rest_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(string uname)
+        public async Task<IActionResult> CreateUser([FromBody] string uname)
         {
             var user = new User { Username= uname };
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            return Ok(user);
+            return Ok(user.UserId);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser(int uid, string uname)
+        public async Task<IActionResult> UpdateUser([FromBody] int uid, string uname)
         {
             var user = new User { UserId = uid, Username=uname };
             _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
-            return Ok(user);
+            return Ok(user.Username);
         }
 
 

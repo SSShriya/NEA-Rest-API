@@ -14,7 +14,7 @@ namespace NEA_Rest_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePairing(int u1, int u2)
+        public async Task<IActionResult> CreatePairing([FromBody] int u1, int u2)
         {
             var pairing = new Pairing { User1 = u1, User2 = u2};
             _context.Pairings.Add(pairing);
@@ -23,7 +23,7 @@ namespace NEA_Rest_API.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeletePairing(int pid)
+        public async Task<IActionResult> DeletePairing([FromBody] int pid)
         {
             var pairing = new Pairing {PairingId = pid};
             _context.Pairings.Remove(pairing);
