@@ -7,6 +7,12 @@ namespace NEA_Rest_API.Controllers
     [Route("[controller]")]
     public class PairingController : ControllerBase
     {
+        public class PairingData
+        {
+            public int U1 { get; set; }
+            public int U2 { get; set; }
+        }
+
         private readonly NeaContext _context;
         public PairingController(NeaContext context)
         {
@@ -14,9 +20,9 @@ namespace NEA_Rest_API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePairing([FromBody] int u1, int u2)
+        public async Task<IActionResult> CreatePairing([FromBody] PairingData pairingData)
         {
-            var pairing = new Pairing { User1 = u1, User2 = u2};
+            var pairing = new Pairing { User1 = pairingData.U1, User2 = pairingData.U2};
             _context.Pairings.Add(pairing);
             await _context.SaveChangesAsync();
             return Ok(pairing.PairingId);

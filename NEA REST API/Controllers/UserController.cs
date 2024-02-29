@@ -7,6 +7,11 @@ namespace NEA_Rest_API.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
+        public class UserData
+        {
+            public int UID { get; set; }
+            public string UName { get; set; }
+        }
         private readonly NeaContext _context;
         public UserController(NeaContext context)
         {
@@ -37,9 +42,9 @@ namespace NEA_Rest_API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] int uid, string uname)
+        public async Task<IActionResult> UpdateUser([FromBody] UserData userData)
         {
-            var user = new User { UserId = uid, Username=uname };
+            var user = new User { UserId = userData.UID, Username=userData.UName};
             _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
             return Ok(user.Username);
