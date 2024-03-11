@@ -12,6 +12,7 @@ namespace NEA_Rest_API.Controllers
             public int UID { get; set; }
             public string UName { get; set; }
         }
+
         private readonly NeaContext _context;
         public UserController(NeaContext context)
         {

@@ -19,6 +19,17 @@ namespace NEA_Rest_API.Controllers
             _context = context;
         }
 
+        [HttpGet ("{uid}/{pid}")]
+        public IActionResult GetPairings(int uid, int pid)
+        {
+            var pairings = _context.Pairings.Where(u => u.User2 == uid && u.PairingId>pid)
+                .Select(p => new { p.User1, p.PairingId })
+                .ToList();
+
+            return Ok(pairings);
+        
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePairing([FromBody] PairingData pairingData)
         {
@@ -28,6 +39,7 @@ namespace NEA_Rest_API.Controllers
             return Ok(pairing.PairingId);
         }
 
+        //TAKE THIS OUT WHEN COPYING AND PASTING CODE
         [HttpDelete]
         public async Task<IActionResult> DeletePairing([FromBody] int pid)
         {
