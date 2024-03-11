@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NEA_Rest_API.Models;
+using Newtonsoft.Json;
+using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace NEA_Rest_API.Controllers
 {
@@ -10,7 +13,9 @@ namespace NEA_Rest_API.Controllers
         public class UserData
         {
             public int UID { get; set; }
-            public string UName { get; set; }
+            public string? UName { get; set; }
+            public string? FirebaseToken { get; set; }
+
         }
 
         private readonly NeaContext _context;
@@ -19,7 +24,7 @@ namespace NEA_Rest_API.Controllers
             _context = context;
         }
 
-        [HttpGet ("{id}")]
+        [HttpGet ("1/{id}")]
         public async Task<IActionResult> GetUsers(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -30,6 +35,20 @@ namespace NEA_Rest_API.Controllers
             else
             {
                 return Ok(user.Username);
+            }
+        }
+
+        [HttpGet ("2/{id}")]
+        public async Task<IActionResult> GetRegistrationToken(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(user.FirebaseToken);
             }
         }
 
@@ -45,11 +64,12 @@ namespace NEA_Rest_API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UserData userData)
         {
-            var user = new User { UserId = userData.UID, Username=userData.UName};
+            var user = new User { UserId = userData.UID, Username = userData.UName, FirebaseToken = userData.FirebaseToken};
             _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             await _context.SaveChangesAsync();
-            return Ok(user.Username);
+            return Ok(user);
         }
+
 
 
     }

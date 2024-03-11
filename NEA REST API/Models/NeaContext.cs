@@ -42,6 +42,10 @@ public partial class NeaContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("username");
+            entity.Property(e => e.FirebaseToken)
+                .HasMaxLength(250)
+                .IsUnicode(false)
+                .HasColumnName("firebaseToken");
         });
 
         OnModelCreatingPartial(modelBuilder);
