@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 namespace NEA_Rest_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("User")]
     public class UserController : ControllerBase
     {
         public class UserData

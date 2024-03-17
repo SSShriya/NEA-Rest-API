@@ -4,7 +4,7 @@ using NEA_Rest_API.Models;
 namespace NEA_Rest_API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("Pairing")]
     public class PairingController : ControllerBase
     {
         public class PairingData
