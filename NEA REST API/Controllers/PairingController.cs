@@ -38,8 +38,7 @@ namespace NEA_Rest_API.Controllers
             await _context.SaveChangesAsync();
             return Ok(pairing.PairingId);
         }
-
-        //TAKE THIS OUT WHEN COPYING AND PASTING CODE
+        
         [HttpDelete]
         public async Task<IActionResult> DeletePairing([FromBody] int pid)
         {
